@@ -1,0 +1,62 @@
+/**
+ * Votechain access control
+ *
+ * Author: Luke Powlett <l.j.powlett1@newcastle.ac.uk>
+ */
+
+rule EverybodyCanReadEverything {
+    description: "Allow all participants read access to all resources"
+    participant: "powlett.luke.votechain.User"
+    operation: READ
+    resource: "powlett.luke.votechain.*"
+    action: ALLOW
+}
+
+rule CandidatesCantSubmitTransactions {
+    description: "Allow all participants to submit transactions"
+    participant: "powlett.luke.votechain.Candidate"
+    operation: CREATE
+    resource: "powlett.luke.votechain.Vote"
+    action: DENY
+}
+
+rule VotersCanSubmitTransactions {
+    description: "Allow all voters to submit transactions"
+    participant: "powlett.luke.votechain.Voter"
+    operation: CREATE
+    resource: "powlett.luke.votechain.Vote"
+    action: ALLOW
+}
+
+rule OwnerHasFullAccessToTheirAssets {
+    description: "Allow all participants full access to their assets"
+    participant(p): "powlett.luke.votechain.User"
+    operation: ALL
+    resource(r): "powlett.luke.votechain.Vote"
+    condition: (r.owner.getIdentifier() === p.getIdentifier())
+    action: ALLOW
+}
+
+rule SystemACL {
+    description: "System ACL to permit all access"
+    participant: "org.hyperledger.composer.system.Participant"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule NetworkAdminUser {
+    description: "Grant business network administrators full access to user resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "**"
+    action: ALLOW
+}
+
+rule NetworkAdminSystem {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.hyperledger.composer.system.NetworkAdmin"
+    operation: ALL
+    resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
