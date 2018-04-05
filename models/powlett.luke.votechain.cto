@@ -7,7 +7,7 @@ namespace powlett.luke.votechain
 
 asset Ballot identified by ballotId {
   o String ballotId
-  o Boolean used
+  o Boolean used default=false
   --> User owner
 }
 
