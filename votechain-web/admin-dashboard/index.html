@@ -9,12 +9,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script src="./js/script.js"></script>
+    <script src="./js/index-script.js"></script>
     <script>
 		$( document ).ready(function() {
 			console.log("document loaded");
 			setButtonListeners();
             getCandidates();
+            updateHistorian();
 		});
 	</script>
 
@@ -65,7 +66,7 @@
                                   </form>
                               </div>
                               <div class="modal-footer">
-                                  <button id="candidateSubmitButton" type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
+                                  <button id ="candidateSubmitButton" type="button" class="btn btn-success" data-dismiss="modal">Submit</button>
                                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                               </div>
                           </div>
@@ -75,16 +76,28 @@
               <div class="col-sm-1"></div>
           </div>
           <div class="row">
+              <div id="candidateResponse">
+                  <br>
+
+              </div>
               <div class="col-sm-1"></div>
               <div class="col-sm-10">
-                  <p id="candidateResponse"></p>
                   <input type="text" id="candidateId">
                   <button onclick="deleteCandidate()">delete</button>
               </div>
               <div class="col-sm-1"></div>
+          </div>
+          <div class="row">
+              <br>
+              <div class="col-sm-1"></div>
+              <div class="col-sm-10">
+                  <div id="historian" class="well" style="height:300px;max-height:300px;overflow-y:scroll;max-width=100%;word-wrap: break-word">
+
+                  </div>
+              </div>
+              <div class="col-sm-1"></div>
+          </div>
+
       </div>
-
-
   </body>
-
 </html>

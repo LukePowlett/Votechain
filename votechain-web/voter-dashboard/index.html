@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <title>Voter Dashboard</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="./js/script.js"></script>
+    <script>
+		$( document ).ready(function() {
+			console.log("document loaded");
+			setButtonListeners();
+		});
+	</script>
+
+  </head>
+
+  <body>
+      <nav class="navbar navbar-default">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <a class="navbar-brand" href="#">Voter Dashboard</a>
+            </div>
+      </nav>
+
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-10">
+                  <div class="form-group">
+                      <label for="email">Voter ID:</label>
+                      <input type="email" class="form-control" id="voterId">
+                  </div>
+                  <div class="form-group">
+                      <label for="pwd">PIN:</label>
+                      <input type="password" class="form-control" id="voterPin">
+                  </div>
+                  <button id="voterLoginButton" type="submit" class="btn btn-default">Submit</button>
+              </div>
+              <div class="col-sm-1"></div>
+          </div>
+      </div>
+  </body>
+</html>
