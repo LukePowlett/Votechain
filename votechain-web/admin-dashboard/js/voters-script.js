@@ -45,6 +45,10 @@ function appendVoter(userId, firstName, lastName, address){
     $("#voterResponse").append(voterHtml);
 }
 
+function resetView(){
+    $("#voterResponse").innerHtml="<br>";
+}
+
 function deleteVoter(){
     $.ajax({
         url: 'http://localhost:3000/api/Voter/' + $('#voterId').val(),
@@ -70,18 +74,30 @@ function hash(str){
 
 function getUserBallotsNum(userId){
     // filter by json encoded string i.e. {"owner":"<user_id>"}
-    let filter = '{"owner":"' + userId + '"}';
-    let uriEncodeFilter = encodeURI(filter);
-    let query = '?filter=' + uriEncodeFilter;
+    let filter = '%7B%22where%22%3A%7B%22owner%22%3A%22resource%3Apowlett.luke.votechain.User%23' + userId + '%22%7D%7D';
+    // let uriEncodeFilter = encodeURI(filter);
+    let query = '?filter=' + filter;
 
     let url = 'http://localhost:3000/api/Ballot' + query;
     console.log(url);
 
     var numBallots = -1;
 
-    let stringJson = JSON.stringify($.get(url));
-    let json = JSON.parse(stringJson);
-    numBallots = Object.keys(json).length;
+    $.ajax({
+            url: url,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                let stringJson = JSON.stringify(data);
+                let json = JSON.parse(stringJson);
+                console.log(json);
+                numBallots = Object.keys(json).length;
+            },
+            error: function(error) {
+                console.log(error);
+            }
+    });
+
     return numBallots;
 
 }
@@ -89,7 +105,7 @@ function getUserBallotsNum(userId){
 function generateBallot(voterId){
     var jsonBody = {};
     jsonBody['\$class'] = "powlett.luke.votechain.Ballot";
-    jsonBody['ballotId'] = (new Date()).getTime().toString();
+    jsonBody['ballotId'] = "b" + Math.abs(hash((new Date()).getTime().toString() + voterId));
     jsonBody['owner'] = voterId;
     // TO BE REMOVED AFTER NEXT BUILD
     jsonBody['used'] = "false";
