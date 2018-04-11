@@ -1,6 +1,6 @@
 {
   "name": "votechain-network",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Proof-of-Concept E-Voting System",
   "scripts": {
     "prepublish": "mkdirp ./dist && composer archive create --sourceType dir --sourceName . -a ./dist/votechain-network.bna",
