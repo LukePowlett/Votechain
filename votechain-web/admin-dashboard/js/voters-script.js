@@ -9,9 +9,18 @@ function setButtonListeners(){
         jsonBody['lastName'] = $('#voterLastName').val();
     	jsonBody['address'] = $('#voterAddress').val();
         console.log(jsonBody);
-        $.post("http://localhost:3000/api/Voter", jsonBody);
-        generateBallot(userId);
-        getVoters();
+        $.ajax({
+            url: 'http://localhost:3000/api/Voter',
+            type: 'POST',
+            dataType: 'json',
+            data: jsonBody,
+            async: false,
+            success: function(data) {
+                console.log(voterId + " deleted");
+                generateBallot(userId);
+                getVoters();
+            }
+        });
     });
 }
 
@@ -23,6 +32,8 @@ function getVoters(){
                 var stringJson = JSON.stringify(data);
                 var json = JSON.parse(stringJson);
                 var len = Object.keys(json).length;
+
+                resetView();
 
                 for(i = 0; i < len; i++){
                     let userId = json[i].userId;
@@ -46,19 +57,36 @@ function appendVoter(userId, firstName, lastName, address){
 }
 
 function resetView(){
-    $("#voterResponse").innerHtml="<br>";
+    $("#voterResponse").html("<br>");
 }
 
 function deleteVoter(){
+    let voterId = $('#voterId').val();
+    if(getUserBallotsNum(voterId) > 0){
+        let ballotId = getUserBallot(voterId);
+        deleteBallot(ballotId);
+    }
     $.ajax({
-        url: 'http://localhost:3000/api/Voter/' + $('#voterId').val(),
+        url: 'http://localhost:3000/api/Voter/' + voterId,
         type: 'DELETE',
         success: function(result) {
+            console.log(voterId + " deleted");
             getVoters();
         }
     });
+}
 
-    // Also need to delete voters ballot
+function deleteBallot(ballotId){
+    $.ajax({
+        url: 'http://localhost:3000/api/Ballot/' + ballotId,
+        type: 'DELETE',
+        success: function(result) {
+            console.log(ballotId + " deleted");
+        },
+        error: function(error){
+            console.error(ballotId + " not deleted!\n" + error);
+        }
+    });
 }
 
 function hash(str){
@@ -99,7 +127,6 @@ function getUserBallotsNum(userId){
     });
 
     return numBallots;
-
 }
 
 function generateBallot(voterId){
@@ -127,4 +154,35 @@ function updateHistorian(){
                 alert('error');
             }
     });
+}
+
+function getUserBallot(userId){
+    // filter by json encoded string i.e. {"owner":"<user_id>"}
+    let filter = '%7B%22where%22%3A%7B%22owner%22%3A%22resource%3Apowlett.luke.votechain.User%23' + userId + '%22%7D%7D';
+    // let uriEncodeFilter = encodeURI(filter);
+    let query = '?filter=' + filter;
+
+    let url = 'http://localhost:3000/api/Ballot' + query;
+    console.log(url);
+
+    var ballotId = "";
+
+    $.ajax({
+            url: url,
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                let stringJson = JSON.stringify(data);
+                let json = JSON.parse(stringJson);
+                console.log(json);
+
+                ballotId = json[0].ballotId;
+                console.log(ballotId);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+    });
+
+    return ballotId;
 }

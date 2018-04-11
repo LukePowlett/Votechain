@@ -36,17 +36,8 @@ function generateVoter(firstName, lastName, address){
     jsonBody['address'] = address;
     console.log(jsonBody);
 
-    $.ajax({
-            url: 'http://localhost:3000/api/Voter',
-            data: jsonBody,
-            dataType: 'json',
-            success: function(data) {
-                generateBallot(userId);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-    });
+    $.post("http://localhost:3000/api/Voter", jsonBody);
+    generateBallot(userId);
 }
 
 function generateBallot(voterId){
@@ -58,17 +49,8 @@ function generateBallot(voterId){
     jsonBody['used'] = "false";
     console.log(jsonBody);
 
-    $.ajax({
-            url: 'http://localhost:3000/api/Ballot',
-            data: jsonBody,
-            dataType: 'json',
-            success: function(data) {
-                generateBallot(userId);
-            },
-            error: function(error) {
-                console.error(error);
-            }
-    });
+    $.post("http://localhost:3000/api/Ballot", jsonBody);
+    console.log("Ballot created for " + voterId);
 }
 
 function genUserId(){
@@ -108,7 +90,7 @@ function appendCandidate(userId, firstName, lastName, party){
 }
 
 function resetView(){
-    $("#candidateResponse").innerHtml="<br>";
+    $("#candidateResponse").html("<br>");
 }
 
 function getUserBallotsNum(userId){
@@ -162,17 +144,6 @@ function hash(str){
     return hash;
 }
 
-function generateBallot(voterId){
-    var jsonBody = {};
-    jsonBody['\$class'] = "powlett.luke.votechain.Ballot";
-    jsonBody['ballotId'] = (new Date()).getTime().toString();
-    jsonBody['owner'] = voterId;
-
-    console.log(jsonBody);
-
-    $.post("http://localhost:3000/api/Vote", jsonBody);
-}
-
 function updateHistorian(){
     $.ajax({
             url: 'http://localhost:3000/api/system/historian',
@@ -189,6 +160,8 @@ function updateHistorian(){
 
 function demo(){
     console.log("DEMO");
+    deleteAll();
+
     generateCandidate("Alistar", "Brown", "Red");
     generateCandidate("June", "Craddock", "Blue");
     generateCandidate("Michael", "Fletcher", "Green");
@@ -197,5 +170,116 @@ function demo(){
     generateVoter("Nicholas", "West", "6a Hanley Avenue");
     generateVoter("Steven", "Colt", "33 Long Road");
 
-    location.reload();
+    getCandidates();
+}
+
+function deleteAll(){
+    deleteAllCandidates();
+    deleteAllBallots();
+    deleteAllVoters();
+}
+
+function deleteAllCandidates(){
+
+    var len = -1;
+    var json = "";
+
+    $.ajax({
+        url: 'http://localhost:3000/api/Candidate',
+        async: false,
+        success: function(data) {
+            let jsonString = JSON.stringify(data);
+            json = JSON.parse(jsonString);
+            len = Object.keys(json).length;
+
+            console.log(len);
+            console.log(json);
+        }
+    });
+
+    if(len > 0 ){
+        for(i = 0; i < len; i++){
+            let userId = json[i].userId;
+            $.ajax({
+                url: 'http://localhost:3000/api/Candidate/' + userId,
+                type: 'DELETE',
+                success: function(result) {
+                    console.log(userId + " deleted");
+                },
+                error: function(error){
+                    console.error(userId + " not deleted!\n" + error);
+                }
+            });
+        }
+    }
+}
+
+function deleteAllVoters(){
+
+    var len = -1;
+    var json = "";
+
+    $.ajax({
+        url: 'http://localhost:3000/api/Voter',
+        async: false,
+        success: function(data) {
+            let jsonString = JSON.stringify(data);
+            json = JSON.parse(jsonString);
+            len = Object.keys(json).length;
+
+            console.log(len);
+            console.log(json);
+        }
+    });
+
+    if(len > 0){
+        for(i = 0; i < len; i++){
+            let userId = json[i].userId;
+            $.ajax({
+                url: 'http://localhost:3000/api/Voter/' + userId,
+                type: 'DELETE',
+                success: function(result) {
+                    console.log(userId + " deleted");
+                },
+                error: function(error){
+                    console.error(userId + " not deleted!\n" + error);
+                }
+            });
+        }
+    }
+}
+
+function deleteAllBallots(){
+
+    var len = -1;
+    var json = "";
+
+    $.ajax({
+        url: 'http://localhost:3000/api/Ballot',
+        async: false,
+        success: function(data) {
+            let jsonString = JSON.stringify(data);
+            json = JSON.parse(jsonString);
+            len = Object.keys(json).length;
+
+            console.log(len);
+            console.log(json);
+        }
+    });
+
+    if(len > 0){
+        for(i = 0; i < len; i++){
+            let ballotId = json[i].ballotId;
+            $.ajax({
+                url: 'http://localhost:3000/api/Ballot/' + ballotId,
+                type: 'DELETE',
+                success: function(result) {
+                    console.log(ballotId + " deleted");
+                },
+                error: function(error){
+                    console.error(ballotId + " not deleted!\n" + error);
+                }
+            });
+        }
+    }
 }
