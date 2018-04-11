@@ -52,7 +52,7 @@ function getVoters(){
 
 function appendVoter(userId, firstName, lastName, address){
     let numBallots = getUserBallotsNum(userId);
-    var voterHtml = '<div class="row"><div class="col-sm-1"></div><div class="col-sm-10"><div class="well"><strong>User ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Address: ' + address + '</strong><br><strong>Ballots: ' + numBallots + '</strong></div></div><div class="col-sm-1"></div></div>';
+    var voterHtml = '<div class="well"><strong>User ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Address: ' + address + '</strong><br><strong>Ballots: ' + numBallots + '</strong>';
     $("#voterResponse").append(voterHtml);
 }
 
@@ -142,19 +142,19 @@ function generateBallot(voterId){
     $.post("http://localhost:3000/api/Ballot", jsonBody);
 }
 
-function updateHistorian(){
-    $.ajax({
-            url: 'http://localhost:3000/api/system/historian',
-            dataType: 'json',
-            success: function(data) {
-                $("#historian").html(JSON.stringify(data));
-            },
-            error: function() {
-                $("#historian").append("error");
-                alert('error');
-            }
-    });
-}
+// function updateHistorian(){
+//     $.ajax({
+//             url: 'http://localhost:3000/api/system/historian',
+//             dataType: 'json',
+//             success: function(data) {
+//                 $("#historian").html(JSON.stringify(data));
+//             },
+//             error: function() {
+//                 $("#historian").append("error");
+//                 alert('error');
+//             }
+//     });
+// }
 
 function getUserBallot(userId){
     // filter by json encoded string i.e. {"owner":"<user_id>"}

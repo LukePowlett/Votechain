@@ -16,8 +16,6 @@ function submitBallot(form){
                 jsonBody['voteId'] = "t" + Math.abs(hash((new Date()).getTime().toString() + voterId));
                 jsonBody['ballot'] = ballotId;
                 jsonBody['newOwner'] = candidateId;
-                // jsonBody['lastName'] = $('#voterLastName').val();
-                // jsonBody['address'] = $('#voterAddress').val();
                 console.log(jsonBody);
 
                 $.ajax({
@@ -43,8 +41,8 @@ function submitBallot(form){
     } else {
         console.error("NO SUCH VOTER " + voterId);
     }
-
     console.log(form.voterId.value + " " + form.voterPin.value + " " + form.candidateId.value);
+    location.reload();
 }
 
 function voterExists(voterId){

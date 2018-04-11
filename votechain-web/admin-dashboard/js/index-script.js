@@ -45,17 +45,10 @@ function generateBallot(voterId){
     jsonBody['\$class'] = "powlett.luke.votechain.Ballot";
     jsonBody['ballotId'] = "b" + Math.abs(hash((new Date()).getTime().toString() + voterId));
     jsonBody['owner'] = voterId;
-    // TO BE REMOVED AFTER NEXT BUILD
-    jsonBody['used'] = "false";
     console.log(jsonBody);
 
     $.post("http://localhost:3000/api/Ballot", jsonBody);
     console.log("Ballot created for " + voterId);
-}
-
-function genUserId(){
-    var userId = "";
-    return userId;
 }
 
 function getCandidates(){
@@ -85,7 +78,7 @@ function getCandidates(){
 
 function appendCandidate(userId, firstName, lastName, party){
     let candidateBallots = getUserBallotsNum(userId);
-    var candidateHtml = '<div class="row"><div class="col-sm-1"></div><div class="col-sm-10"><div class="well"><strong>User ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Party: ' + party + '</strong><br><strong>Votes: ' + candidateBallots + '</strong></div></div><div class="col-sm-1"></div></div>';
+    var candidateHtml = '<div class="well"><strong>User ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Party: ' + party + '</strong><br><strong>Votes: ' + candidateBallots + '</strong></div>';
     $("#candidateResponse").append(candidateHtml);
 }
 
@@ -142,20 +135,6 @@ function hash(str){
         hash = hash & hash; // Convert to 32bit integer
     }
     return hash;
-}
-
-function updateHistorian(){
-    $.ajax({
-            url: 'http://localhost:3000/api/system/historian',
-            dataType: 'json',
-            success: function(data) {
-                $("#historian").html(JSON.stringify(data));
-            },
-            error: function() {
-                $("#historian").append("error");
-                alert('error');
-            }
-    });
 }
 
 function demo(){
