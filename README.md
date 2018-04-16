@@ -10,13 +10,13 @@ Votechain is a small-scale e-voting system developed in support of my dissertati
 
 ### Business Network
 
-The Blockchain implementation of Votechain utilises Hyperledger Fabrics [Fabric Composer] tool to develop a Business Network Archive (BNA), deployable on the latest HLFv11.
+The Blockchain implementation of Votechain utilises Hyperledger Fabrics [Hyperledger Composer] tool to develop a Business Network Archive (BNA), deployable on the latest HLFv11.
 
 The bna is made up of 3 core components:
 
-  - **Model File:**         /models/powlett.luke.votechain.cto \t Outlining the assets, participants and transactions for the Network
-  - **Transaction File**    /lib/logic.js \t The main transaction logic (chaincode) for the network
-  - **Permission File**     /permissions.acl \t Participant permission levels for assets/transactions
+  - **Model File:**         /models/powlett.luke.votechain.cto  Outlining the assets, participants and transactions for the Network
+  - **Transaction File**    /lib/logic.js   The main transaction logic (chaincode) for the network
+  - **Permission File**     /permissions.acl    Participant permission levels for assets/transactions
 
 This bna is deployed onto and instance of HLFv11 and a REST API can be generated to interface with the votechain network.
 
