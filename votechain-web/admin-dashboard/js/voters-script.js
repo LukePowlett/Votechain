@@ -52,7 +52,7 @@ function getVoters(){
 
 function appendVoter(userId, firstName, lastName, address){
     let numBallots = getUserBallotsNum(userId);
-    var voterHtml = '<div class="well"><strong>User ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Address: ' + address + '</strong><br><strong>Ballots: ' + numBallots + '</strong>';
+    var voterHtml = '<div class="well"><strong>Voter ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Address: ' + address + '</strong><br><strong>Ballots: ' + numBallots + '</strong>';
     $("#voterResponse").append(voterHtml);
 }
 

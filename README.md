@@ -32,6 +32,8 @@ There are 3 dashboards for the Votechain proof-of-concept:
 
 The web root for these dashboards is at /votechain-web/
 
+**SEE Full-Installation-Instructions.txt FOR GUIDANCE ON INSTALLING/RUNNING HLF AND VOTECHAIN LOCALLY **
+
 *Note that the focus of my project is on the backend implementation of a secure E-Voting system on Hyperledger Fabric; the purpose of the dashboards is to demonstrate the blockchain backend and so any security flaws in the front end are outside the main scope of my project*
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)

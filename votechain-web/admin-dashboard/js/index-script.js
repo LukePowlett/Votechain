@@ -78,7 +78,7 @@ function getCandidates(){
 
 function appendCandidate(userId, firstName, lastName, party){
     let candidateBallots = getUserBallotsNum(userId);
-    var candidateHtml = '<div class="well"><strong>User ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Party: ' + party + '</strong><br><strong>Votes: ' + candidateBallots + '</strong></div>';
+    var candidateHtml = '<div class="well"><strong>Candidate ID: ' + userId + '</strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Party: ' + party + '</strong><br><strong>Votes: ' + candidateBallots + '</strong></div>';
     $("#candidateResponse").append(candidateHtml);
 }
 

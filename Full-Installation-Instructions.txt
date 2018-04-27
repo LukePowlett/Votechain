@@ -1,0 +1,80 @@
+(Adapted from official Hyperledger Composer tutorials at https://hyperledger.github.io/composer/latest/tutorials/tutorials.html)
+
+______________________________
+
+Installing Pre Requisites
+
+    - Min OS:           Ubuntu Linux 14.04 / 16.04 LTS (both 64-bit), or Mac OS 10.12
+    - Docker Engine:    Version 17.03 or higher
+    - Docker-Compose:   Version 1.8 or higher
+    - Node:             8.9 or higher (version 9 not supported)
+    - npm:              v5.x
+    - git:              2.9.x or higher
+    - Python:           2.7.x
+
+    Ubuntu
+
+curl -O https://hyperledger.github.io/composer/latest/prereqs-ubuntu.sh
+chmod u+x prereqs-ubuntu.sh
+
+This script briefly uses sudo in its execution so you will be prompted for your password
+./prereqs-ubuntu.sh
+
+
+    Mac OS
+
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+
+When you hit enter you should see the pop-up below, prompting you to install git. Press the Get Xcode button to install the full Apple Xcode IDE, including a C++ compiler, used to install native Node.js modules.
+
+Create your bash profile
+touch .bash_profile
+
+Run original command
+curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
+
+Close and re-open terminal
+
+Install node
+nvm install --lts
+nvm use --lts
+node --version
+
+Install docker follwing instructions at:
+https://docs.docker.com/docker-for-mac/install/
+
+______________________________
+
+Installing HLF
+
+CLI Tools
+npm install -g composer-cli
+npm install -g composer-rest-server
+
+In [dir] of choice (e.g. ~/HLF)
+mkdir [dir]/fabric-tools && cd [dir]/fabric-tools
+
+curl -O https://raw.githubusercontent.com/hyperledger/composer-tools/master/packages/fabric-dev-servers/fabric-dev-servers.tar.gz
+tar -xvf fabric-dev-servers.tar.gz
+
+cd [dir]/fabric-tools
+./downloadFabric.sh
+
+______________________________
+
+Running Votechain
+
+In [dir] (same [dir] fabric tools installed)
+
+git clone https://github.com/LukePowlett/Votechain.git
+cd votechain-network
+sh ./firstVotechainStart.sh
+
+______________________________
+
+Accessing dashboards
+
+Set up local web host root dir (e.g using XAMPP/MAMP htdocs root):
+[dir]/votechain-network/votechain-web
+
+Go to http://localhost for links to 3 dashboards
