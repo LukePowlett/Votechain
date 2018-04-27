@@ -1,1 +1,6 @@
-connection.json
+/connection.json
+/test
+/features
+/test
+/*.card
+/updateWebDir.sh
