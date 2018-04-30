@@ -15,6 +15,7 @@
     <script>
 		$(document).ready(function() {
 			console.log("document loaded");
+            getCandidates();
 			updateHistorian();
 		});
 	</script>
@@ -29,6 +30,13 @@
             </div>
           </div>
       </nav>
+
+      <div>
+          <center>
+              <p><strong>CANDIDATES</strong></p>
+              <span id="candidateResponse"></span>
+          </center>
+      </div>
 
       <div id="transactionHistorian" class="container-fluid">
 

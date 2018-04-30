@@ -26,7 +26,7 @@ function submitBallot(form){
                         async: false,
                         success: function(data) {
                             console.log("Vote submitted: \n" + data);
-                            voterExists = true;
+                            console.log("Ballot Receipt: \n" + "Thankyou for your vote.\n" + "Your Ballot ID: " + ballotId);
                         },
                         error: function(error) {
                             console.error("Error on vote submission: \n" + error);
@@ -173,6 +173,6 @@ function getUserBallotsNum(userId){
 }
 
 function appendCandidate(userId, firstName, lastName, party){
-    var candidateHtml = '<div class="row"><div class="col-sm-1"></div><div class="col-sm-10"><div class="well"><form><strong>Candidate ID: <input name="candidateId" type="hidden" value="' + userId + '">' + userId + '</input></strong><br><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Party: ' + party + '</strong><br><br><div class="form-group"><label for="email">Voter ID:</label><input type="email" class="form-control" name="voterId"></div><div class="form-group"><label for="pwd">PIN:</label><input type="password" class="form-control" name="voterPin"></div><button id="voteSubmitButton type="submit" onclick="submitBallot(this.form)" class="voteSubmitButton btn btn-default">Submit</button></form></div></div><div class="col-sm-1"></div></div>';
+    var candidateHtml = '<div class="well"><form><strong>Name: ' + firstName + ' ' + lastName + '</strong><br><strong>Party: ' + party + '</strong><br><strong>Candidate ID: <input name="candidateId" type="hidden" value="' + userId + '">' + userId + '</input></strong><br><br><div class="form-group"><label for="email">Voter ID:</label><input type="email" class="form-control" name="voterId"></div><div class="form-group"><label for="pwd">PIN:</label><input type="password" class="form-control" name="voterPin"></div><button id="voteSubmitButton type="submit" onclick="submitBallot(this.form)" class="voteSubmitButton btn btn-default">Submit</button></form></div>';
     $("#candidateResponse").append(candidateHtml);
 }
